@@ -1,31 +1,24 @@
-html,
 body {
-  background-color: lightblue;
-  font-family: Arial, sans-serif;
+  box-sizing: border-box;
   margin: 0;
-  padding: 20px;
+  padding: 2rem 3rem;
+  background-color: white;
+  color: rgb(26, 24, 23);
 }
-
-body {
-  nav {
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      display: inline;
-      margin-right: 15px;
-    }
-
-    a {
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-
-      &:hover {
-        color: #0066cc;
-      }
-    }
-  }
+nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  gap: 3rem;
+}
+li a {
+  display: inline-block;
+  text-decoration: none;
+  color: rgb(26, 24, 23);
+  transition: transform 0.3s ease-in;
+}
+a:hover {
+  transform: scale(1.1);
+  font-weight: 700;
 }

@@ -28,6 +28,10 @@ app.get("/projects", (req, res) => {
   const title = "projects";
   res.render("projects", { title });
 });
+app.get("/categories", (req, res) => {
+  const title = "Categories";
+  res.render("categories", { title });
+});
 // express listening for http request
 app.listen(PORT, () => {
   console.log(`server is running at http://localhost:${PORT}`);
