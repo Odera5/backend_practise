@@ -1,0 +1,28 @@
+{
+  "name": "backend_practise",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Odera5/backend_practise#readme",
+  "bugs": {
+    "url": "https://github.com/Odera5/backend_practise/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Odera5/backend_practise.git"
+  },
+  "license": "ISC",
+  "author": "Odera",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.10"
+  },
+  "dependencies": {
+    "ejs": "^7.0.1",
+    "express": "^5.3.0"
+  }
+}
