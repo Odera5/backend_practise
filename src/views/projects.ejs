@@ -1,6 +1,18 @@
 <%- include('partials/header') %>
 <main>
   <h1><%= title %></h1>
-  <!-- Put your page-specific content here -->
+  <ul>
+    <% projects.forEach(function(project) { %>
+      <li>
+        <a class="project-link" href="/project/<%= project.project_id %>">
+          <%= new Date(project.date).toLocaleDateString('en-GB', {
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric'
+}) %>: <span><%= project.title %></span>
+          <em>(<%= project.name %>)</em>
+        </a>
+      </li>
+    <% }); %>
 </main>
 <%- include('partials/footer') %>

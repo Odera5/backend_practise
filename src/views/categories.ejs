@@ -2,10 +2,13 @@
 <main>
   <h1><%= title %></h1>
   <ul>
-    <li>Environmental</li>
-    <li>Educational</li>
-    <li>Community Service</li>
-    <li>Health and Wellness</li>
+    <% categories.forEach(function(category) { %>
+      <li>
+        <a class="category-link" href="/category/<%= category.category_id %>">
+          <span><%= category.name %></span>
+        </a>
+      </li>
+    <% }); %>
   </ul>
 </main>
 <%- include('partials/footer') %>

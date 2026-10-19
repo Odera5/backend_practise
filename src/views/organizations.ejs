@@ -1,6 +1,15 @@
 <%- include('partials/header') %>
 <main>
   <h1><%= title %></h1>
-  <!-- Put your page-specific content here -->
+  <ul>
+    <% organizations.forEach(function(organization) { %>
+      <li>
+        <a class="organization-link" href="/organization/<%= organization.organization_id %>">
+          <img src="images/<%= organization.logo_filename %>" alt="<%= organization.name %>">
+          <span><%= organization.name %></span>
+        </a>
+      </li>
+    <% }); %>
+  </ul>
 </main>
 <%- include('partials/footer') %>
