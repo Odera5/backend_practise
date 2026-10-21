@@ -10,5 +10,9 @@
   day: "numeric"
 }) %></p>
 <p><strong>Partner Organization</strong> - <a href="/organization/<%= projectDetails.organization_id %>"><%= projectDetails.name %></a></p>
+<h3>Category for <%= title %>:  </h3>
+<% categories.forEach((category)=>{ %>
+<li><a href="/category/<%= category.category_id %>"><%= category.name %></a></li>
+<%})%>
 </main>
 <%- include('partials/footer') %>

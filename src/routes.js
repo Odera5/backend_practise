@@ -4,7 +4,7 @@ import {
   getOrganizationDetailsController,
 } from "./controllers/organizations.js";
 import { getProjects, showProjectDetails } from "./controllers/projects.js";
-import { getCategories } from "./controllers/categories.js";
+import { getCategories, showCategory } from "./controllers/categories.js";
 import { getHome } from "./controllers/home.js";
 
 const router = express.Router();
@@ -14,4 +14,5 @@ router.get("/categories", getCategories);
 router.get("/", getHome);
 router.get("/organization/:organizationId", getOrganizationDetailsController);
 router.get("/project/:project_id", showProjectDetails);
+router.get("/category/:category_id", showCategory);
 export { router };

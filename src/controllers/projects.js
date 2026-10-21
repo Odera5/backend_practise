@@ -3,6 +3,7 @@ import {
   getUpcomingProjects,
   getProjectDetails,
 } from "../models/projects.js";
+import { getCategoryForServiceProject } from "../models/categories.js";
 
 // controller function to get all projects
 const getProjects = async (req, res, next) => {
@@ -24,9 +25,10 @@ const showProjectDetails = async (req, res, next) => {
   const projectId = req.params.project_id;
   try {
     const projectDetails = await getProjectDetails(projectId);
+    const categories = await getCategoryForServiceProject(projectId);
 
     title = projectDetails.title;
-    res.render("project", { title, projectDetails });
+    res.render("project", { title, projectDetails, categories });
   } catch (error) {
     const message = error.message;
     const err = new Error(`Could not fetch project detail: ${message}`);
