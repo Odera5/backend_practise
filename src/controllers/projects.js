@@ -1,9 +1,37 @@
-import { getAllProjects } from "../models/projects.js";
+import {
+  getAllProjects,
+  getUpcomingProjects,
+  getProjectDetails,
+} from "../models/projects.js";
 
-const getProjects = async (req, res) => {
+// controller function to get all projects
+const getProjects = async (req, res, next) => {
   const title = "Projects";
-  const projects = await getAllProjects();
-  res.render("projects", { title, projects });
+  const number_of_upcomig = 5;
+  try {
+    const projects = await getUpcomingProjects(number_of_upcomig);
+    res.render("projects", { title, projects });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    next(error); // Let the global error handler handle this
+  }
 };
 
-export { getProjects };
+//controller function to get project details
+
+const showProjectDetails = async (req, res, next) => {
+  let title;
+  const projectId = req.params.project_id;
+  try {
+    const projectDetails = await getProjectDetails(projectId);
+
+    title = projectDetails.title;
+    res.render("project", { title, projectDetails });
+  } catch (error) {
+    const message = error.message;
+    const err = new Error(`Could not fetch project detail: ${message}`);
+    next(err);
+  }
+};
+
+export { getProjects, showProjectDetails };

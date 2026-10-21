@@ -2,15 +2,14 @@ import express from "express";
 import { fileURLToPath } from "url";
 import path from "path";
 import { testConnection } from "./src/models/db.js";
-import { getOrganizations } from "./src/controllers/organizations.js";
-import { getProjects } from "./src/controllers/projects.js";
-import { getCategories } from "./src/controllers/categories.js";
+import { router } from "./src/routes.js";
 import helmet from "helmet";
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || "production";
 const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
+//security header to all responses
 app.use(helmet());
 
 // middleware
@@ -31,14 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 // route
-app.get("/", (req, res) => {
-  const title = "Home";
-  res.render("home", { title });
-});
-app.get("/organizations", getOrganizations);
-app.get("/projects", getProjects);
-app.get("/categories", getCategories);
-
+app.use(router);
 // catch-call error handling middleware
 app.use((req, res, next) => {
   const error = new Error("Page Not Found");

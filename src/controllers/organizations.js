@@ -1,6 +1,10 @@
-import { getAllOrganizations } from "../models/organizations.js";
-
-const getOrganizations = async (req, res) => {
+import {
+  getAllOrganizations,
+  getOrganizationDetails,
+} from "../models/organizations.js";
+import { getProjectsByOrganization } from "../models/projects.js";
+// controller function to get all organizations
+const getOrganizations = async (req, res, next) => {
   const title = "Organizations";
   console.log("getOrganizations controller reached");
   try {
@@ -9,10 +13,27 @@ const getOrganizations = async (req, res) => {
     console.log("Fetched organizations:", organizations);
   } catch (error) {
     console.error("Error fetching organizations:", error.message);
-    res
-      .status(500)
-      .render("error", { title, error: "Failed to fetch organizations" });
+    next(error); // Let the global error handler handle this
   }
 };
 
-export { getOrganizations };
+// controller function to get organization detail
+const getOrganizationDetailsController = async (req, res, next) => {
+  const organizationId = req.params.organizationId;
+  let title;
+  try {
+    const organizationDetails = await getOrganizationDetails(organizationId);
+    const projects = await getProjectsByOrganization(organizationId);
+    title = organizationDetails.name;
+    res.render("organization", {
+      title,
+      organizationDetails,
+      projects,
+    });
+  } catch (error) {
+    console.error("Error fetching organization details:", error.message);
+    next(error);
+  }
+};
+
+export { getOrganizations, getOrganizationDetailsController };

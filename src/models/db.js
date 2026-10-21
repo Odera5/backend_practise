@@ -31,7 +31,11 @@ if (
           error: error.message,
         });
 
-        throw error;
+        const err = new Error(
+          `can not connect to database please check your network. ${error.message}`,
+        );
+
+        throw err;
       }
     },
   };
