@@ -37,4 +37,45 @@ const getCategoryForServiceProject = async (projectId) => {
   const result = await db.query(query, queryParams);
   return result.rows;
 };
-export { getAllCategories, getCategoryDetails, getCategoryForServiceProject };
+
+const createNewCategory = async (name) => {
+  const query = `
+  INSERT INTO category (name)
+  VALUES($1)
+  RETURNING category_id;
+  `;
+  const queryParams = [name];
+  const result = await db.query(query, queryParams);
+  if (result.rows[0] === 0) {
+    throw new Error("Failed to create New categories");
+  }
+  if (process.env.ENABLE_SQL_LOGGING === "true") {
+    console.log("New category created successfully");
+  }
+  return result.rows[0].category_id;
+};
+
+const updateCategory = async (name, categoryId) => {
+  const query = `
+UPDATE category
+SET name = $1
+WHERE category_id = $2
+RETURNING category_id;
+`;
+  const queryParams = [name, categoryId];
+  const result = await db.query(query, queryParams);
+  if (result.rows[0] == 0) {
+    throw new Error("Failed to update category");
+  }
+  if (process.env.ENABLE_SQL_LOGGING == "true") {
+    console.log("Category updated sucessfully");
+  }
+  return result.rows[0];
+};
+export {
+  getAllCategories,
+  getCategoryDetails,
+  getCategoryForServiceProject,
+  createNewCategory,
+  updateCategory,
+};

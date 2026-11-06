@@ -13,5 +13,9 @@
         </a></span> - <span><a href="/organization/<%= project.organization_id %>"><em>(<%= project.name %>)</em></a>
       </li></span>
     <% }); %>
+
+    <% if (user && user.role_name === 'admin') { %>
+      <p><a href="/new-project">Create New Project</a></p>
+    <% } %>
 </main>
 <%- include('partials/footer') %>

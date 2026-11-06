@@ -11,5 +11,9 @@
       </li>
     <% }); %>
   </ul>
+ <% if (user && user.role_name === 'admin') { %>
+   <p> <a href="/new-organization">Add New Organization</a></p>
+<% } %>
+
 </main>
 <%- include('partials/footer') %>

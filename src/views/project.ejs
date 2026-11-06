@@ -14,5 +14,8 @@
 <% categories.forEach((category)=>{ %>
 <li><a href="/category/<%= category.category_id %>"><%= category.name %></a></li>
 <%})%>
+<% if (user && user.role_name === 'admin') { %>
+  <p><a href="/edit-project/<%=projectDetails.project_id %>">Edit project</a></p>
+<% } %>
 </main>
 <%- include('partials/footer') %>

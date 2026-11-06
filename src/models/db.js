@@ -2,19 +2,17 @@ import { Pool } from "pg";
 
 const pool = new Pool({
   connectionString: process.env.DB_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  // ssl: {
+  //   rejectUnauthorized: false,
+  // },
 });
 
-let db = pool;
-
-if (
-  process.env.NODE_ENV === "development" &&
-  process.env.ENABLE_SQL_LOGGING === "true"
-) {
-  db = {
-    async query(text, params) {
+const db = {
+  async query(text, params) {
+    if (
+      process.env.NODE_ENV === "development" &&
+      process.env.ENABLE_SQL_LOGGING === "true"
+    ) {
       try {
         const start = Date.now();
         const result = await pool.query(text, params);
@@ -33,28 +31,27 @@ if (
           error: error.message,
         });
 
-        const err = new Error(
-          `can not connect to database please check your network. ${error.message}`,
-        );
-
-        throw err;
+        throw error;
       }
-    },
-  };
-} else {
-  db = pool;
-}
+    }
+
+    return pool.query(text, params);
+  },
+};
 
 const testConnection = async () => {
-  const query = `SELECT NOW() AS current_time`;
   try {
-    const result = await db.query(query);
+    const result = await db.query("SELECT NOW() AS current_time");
+
     console.log(
       "Database connection successful. Current time:",
       result.rows[0].current_time,
     );
   } catch (error) {
     console.error("Database connection failed:", error.message);
+    throw error;
   }
 };
-export { db as default, testConnection };
+
+export { pool, testConnection };
+export default db;

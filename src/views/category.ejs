@@ -8,5 +8,8 @@
 
     <%})%>
   </ul>
+  <% if (user && user.role_name === 'admin') { %>
+    <p><a href="/edit-category/<%= categoryDetails.category_id %>">Edit category</a></p>
+  <% } %>
 </main>
 <%- include('partials/footer') %>
